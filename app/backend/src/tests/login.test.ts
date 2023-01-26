@@ -10,7 +10,6 @@ import { app } from '../app';
 
 chai.use(chaiHttp);
 const { expect } = chai;
-// let chaiHttpResponse: Response;
 
 describe('Testa a rota /login', () => {
 
@@ -55,7 +54,7 @@ describe('Testa a rota /login', () => {
     const password = "xablau123";
     const result = await chai.request(app).post("/login").send({ email, password });
 
-    expect(result.status).to.equal(400);
+    expect(result.status).to.equal(401);
     expect(result.text).to.deep.equal('{"message":"Incorrect email or password"}');
   });
 
@@ -64,7 +63,7 @@ describe('Testa a rota /login', () => {
     const password = "123";
     const result = await chai.request(app).post("/login").send({ email, password });
 
-    expect(result.status).to.equal(400);
+    expect(result.status).to.equal(401);
     expect(result.text).to.deep.equal('{"message":"Incorrect email or password"}');
   });
 
