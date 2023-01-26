@@ -5,49 +5,13 @@ import chaiHttp = require('chai-http');
 import Users from '../database/models/Users';
 import UsersMock from './mocks/UsersMock';
 import * as bcrypt from 'bcryptjs';
-// import { Response } from 'superagent';
 import * as token from '../middlewares/token';
 
-// let chaiHttpResponse: Response;
-
 import { app } from '../app';
-import { response } from 'express';
-
 chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Testa a rota /login', () => {
-
-  beforeEach(async () => {
-    sinon
-      .stub(Users, "findOne")
-      .resolves({
-        ...UsersMock
-      } as Users);
-    sinon
-      .stub(bcrypt, "compare")
-      .resolves(true);
-
-    sinon.stub(token, 'authToken').resolves();  
-  });
-
-  afterEach(() => {
-    (Users.findOne as sinon.SinonStub).restore();
-    (bcrypt.compare as sinon.SinonStub).restore();
-    (token.authToken as sinon.SinonStub).restore();
-  })
-
-  it('Checa se retorna um token válido na rota /login', async () => {
-    const email = UsersMock.email;
-    const password = UsersMock.password;
-
-    const result = await chai.request(app).post('/login').send({ email, password });
-
-    expect(result.status).to.be.equal(200);
-    expect(result.body).to.be.an('object');
-    expect(result.body).have.property("token");
-  });
-
   it("Checa se sem algum campo preenchido não é possível fazer login", async () => {
     const email = "";
     const password = "xablau123";
@@ -84,11 +48,29 @@ describe('Testa a rota /login', () => {
   });
 
   it("Checa se mandando um header com token errado, retorna erro", async () => {
-    const header = 'dsfafdsfdsafdsdsaf';
+    const header = 'dafsdsffassd';
     const result = await chai.request(app).get("/login/validate").set('Authorization', header);
 
     expect(result.status).to.equal(401);
     expect(result.text).to.deep.equal('{"message":"Invalid token"}');
   });
 
+  it("Checa se retorna o tipo de usuário com um token correto", async () => {
+    sinon.stub(Users, "findOne").resolves({...UsersMock} as Users);
+    sinon.stub(bcrypt, "compare").resolves(true);
+    
+    const email = "xablau@xablas.com";
+    const password = "xablauzinho123";
+
+    const result = await chai.request(app).post('/login').send({ email, password });
+    expect(result.status).to.have.equal(200);
+    expect(result.body).to.have.property('token');
+
+    const getRole = await chai.request(app).get('/login/validate').set('authorization', result.body.token)
+    expect(getRole.status).to.equal(200);
+    expect(getRole.body).to.deep.equal({ role: 'user' });
+
+    (Users.findOne as sinon.SinonStub).restore();
+    (bcrypt.compare as sinon.SinonStub).restore();
+  });
 });
