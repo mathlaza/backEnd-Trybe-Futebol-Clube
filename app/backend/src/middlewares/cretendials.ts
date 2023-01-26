@@ -5,14 +5,13 @@ const checkCredentials: RequestHandler = (req, res, next) => {
   const regex = /(.+)@(.+){2,}\.(.+){2,}/;
 
   if (!email || !password) {
-    return res.status(400).json({ message: 'Todos os campos devem estar preenchidos!' });
+    return res.status(400).json({ message: 'All fields must be filled' });
   }
   if (!regex.test(email)) {
-    return res.status(400).json({ message: 'Formato de e-mail inválido!' });
+    return res.status(401).json({ message: 'Incorrect email or password' });
   }
   if (password.length < 6) {
-    return res.status(400)
-      .json({ message: 'Sua senha deve ter pelo menos 6 caracteres!' });
+    return res.status(401).json({ message: 'Incorrect email or password' });
   }
   next();
 };

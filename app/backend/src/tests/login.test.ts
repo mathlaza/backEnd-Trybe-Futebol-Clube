@@ -47,7 +47,7 @@ describe('Testa a rota /login', () => {
     const result = await chai.request(app).post("/login").send({ email, password });
 
     expect(result.status).to.equal(400);
-    expect(result.text).to.deep.equal('{"message":"Todos os campos devem estar preenchidos!"}');
+    expect(result.text).to.deep.equal('{"message":"All fields must be filled"}');
   });
 
   it("Checa se com um email inválido não é possível fazer login", async () => {
@@ -56,7 +56,7 @@ describe('Testa a rota /login', () => {
     const result = await chai.request(app).post("/login").send({ email, password });
 
     expect(result.status).to.equal(400);
-    expect(result.text).to.deep.equal('{"message":"Formato de e-mail inválido!"}');
+    expect(result.text).to.deep.equal('{"message":"Incorrect email or password"}');
   });
 
   it("Checa se a senha tiver menos de 6 caracteres não é possível fazer login", async () => {
@@ -65,7 +65,7 @@ describe('Testa a rota /login', () => {
     const result = await chai.request(app).post("/login").send({ email, password });
 
     expect(result.status).to.equal(400);
-    expect(result.text).to.deep.equal('{"message":"Sua senha deve ter pelo menos 6 caracteres!"}');
+    expect(result.text).to.deep.equal('{"message":"Incorrect email or password"}');
   });
 
 });
