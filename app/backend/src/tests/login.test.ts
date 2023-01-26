@@ -5,8 +5,13 @@ import chaiHttp = require('chai-http');
 import Users from '../database/models/Users';
 import UsersMock from './mocks/UsersMock';
 import * as bcrypt from 'bcryptjs';
+// import { Response } from 'superagent';
+import * as token from '../middlewares/token';
+
+// let chaiHttpResponse: Response;
 
 import { app } from '../app';
+import { response } from 'express';
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -22,11 +27,14 @@ describe('Testa a rota /login', () => {
     sinon
       .stub(bcrypt, "compare")
       .resolves(true);
+
+    sinon.stub(token, 'authToken').resolves();  
   });
 
   afterEach(() => {
     (Users.findOne as sinon.SinonStub).restore();
     (bcrypt.compare as sinon.SinonStub).restore();
+    (token.authToken as sinon.SinonStub).restore();
   })
 
   it('Checa se retorna um token válido na rota /login', async () => {
@@ -65,6 +73,22 @@ describe('Testa a rota /login', () => {
 
     expect(result.status).to.equal(401);
     expect(result.text).to.deep.equal('{"message":"Incorrect email or password"}');
+  });
+
+  it("Checa se mandando um header sem token, retorna erro", async () => {
+    const header = '';
+    const result = await chai.request(app).get("/login/validate").set('Authorization', header);
+
+    expect(result.status).to.equal(401);
+    expect(result.text).to.deep.equal('{"message":"Token not found"}');
+  });
+
+  it("Checa se mandando um header com token errado, retorna erro", async () => {
+    const header = 'dsfafdsfdsafdsdsaf';
+    const result = await chai.request(app).get("/login/validate").set('Authorization', header);
+
+    expect(result.status).to.equal(401);
+    expect(result.text).to.deep.equal('{"message":"Invalid token"}');
   });
 
 });
