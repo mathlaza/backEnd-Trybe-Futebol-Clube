@@ -3,13 +3,10 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import Users from '../database/models/Users';
-import UsersMock from './mocks/usersMock';
+import UsersMock from './mocks/UsersMock';
+import * as bcrypt from 'bcryptjs';
 
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
-
-import { Response } from 'superagent';
-import usersMock from './mocks/usersMock';
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -23,24 +20,52 @@ describe('Testa a rota /login', () => {
       .resolves({
         ...UsersMock
       } as Users);
+    sinon
+      .stub(bcrypt, "compare")
+      .resolves(true);
   });
 
-  afterEach(()=>{
+  afterEach(() => {
     (Users.findOne as sinon.SinonStub).restore();
+    (bcrypt.compare as sinon.SinonStub).restore();
   })
 
   it('Checa se retorna um token válido na rota /login', async () => {
-    const mail = usersMock.email;
-    const password = usersMock.password;
+    const email = UsersMock.email;
+    const password = UsersMock.password;
 
-    const result = await chai
-    .request(app)
-    .post('/login')
-    .send({ mail, password });
+    const result = await chai.request(app).post('/login').send({ email, password });
 
+    expect(result.status).to.be.equal(200);
     expect(result.body).to.be.an('object');
-    expect(result.body).to.have.property('token');
-    expect(result).to.have.status(200);
+    expect(result.body).have.property("token");
+  });
+
+  it("Checa se sem algum campo preenchido não é possível fazer login", async () => {
+    const email = "";
+    const password = "xablau123";
+    const result = await chai.request(app).post("/login").send({ email, password });
+
+    expect(result.status).to.equal(400);
+    expect(result.text).to.deep.equal('{"message":"Todos os campos devem estar preenchidos!"}');
+  });
+
+  it("Checa se com um email inválido não é possível fazer login", async () => {
+    const email = "xablau";
+    const password = "xablau123";
+    const result = await chai.request(app).post("/login").send({ email, password });
+
+    expect(result.status).to.equal(400);
+    expect(result.text).to.deep.equal('{"message":"Formato de e-mail inválido!"}');
+  });
+
+  it("Checa se a senha tiver menos de 6 caracteres não é possível fazer login", async () => {
+    const email = "xablau@gmail.com";
+    const password = "123";
+    const result = await chai.request(app).post("/login").send({ email, password });
+
+    expect(result.status).to.equal(400);
+    expect(result.text).to.deep.equal('{"message":"Sua senha deve ter pelo menos 6 caracteres!"}');
   });
 
 });
