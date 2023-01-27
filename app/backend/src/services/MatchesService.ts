@@ -42,10 +42,27 @@ export default class MatchesService {
     return finished;
   };
 
-  public updateMatch = async (id:string, body: IMatchSave) => {
+  public updateMatch = async (id: string, body: IMatchSave) => {
     const { homeTeamGoals, awayTeamGoals } = body;
     await Matches.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
     const updated = await Matches.findByPk(id);
     return updated;
+  };
+
+  public matchesInProgress = async (inProgress: boolean) => {
+    const matches = await Matches.findAll({
+      where: { inProgress },
+      include: [{
+        model: Teams,
+        as: 'homeTeam',
+        attributes: ['teamName'],
+      }, {
+        model: Teams,
+        as: 'awayTeam',
+        attributes: ['teamName'],
+      }],
+    });
+
+    return matches;
   };
 }
