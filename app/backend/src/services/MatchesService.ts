@@ -18,8 +18,8 @@ export default class MatchesService {
     return allMatches;
   };
 
-  public getMatchesInProgress = async (inProgress: boolean) => {
-    const matchesInProgress = await Matches.findAll({
+  public selectMatches = async (inProgress: boolean) => {
+    const selectedMatches = await Matches.findAll({
       where: { inProgress },
       include: [{
         model: Teams,
@@ -32,6 +32,6 @@ export default class MatchesService {
         attributes: ['teamName'],
       }],
     });
-    return matchesInProgress;
+    return selectedMatches;
   };
 }

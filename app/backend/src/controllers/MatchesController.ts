@@ -16,8 +16,9 @@ export default class MatchesController {
     }
 
     const inProgress = req.query.inProgress === 'true';
-    const matchesInProgress = await this.matchService.getMatchesInProgress(inProgress);
 
-    return res.status(200).json(matchesInProgress);
+    const selectedMatches = await this.matchService.selectMatches(inProgress);
+
+    return res.status(200).json(selectedMatches);
   };
 }
