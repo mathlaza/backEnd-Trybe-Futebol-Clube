@@ -3,9 +3,9 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import Users from '../database/models/Users';
-import UsersMock from './mocks/UsersMock';
+import usersMock from './mocks/usersMock';
 import * as bcrypt from 'bcryptjs';
-import * as token from '../middlewares/token';
+// import * as token from '../middlewares/token';
 
 import { app } from '../app';
 chai.use(chaiHttp);
@@ -40,7 +40,7 @@ describe('Testa a rota /login', () => {
   });
 
   it("Checa se retorna o tipo de usuário com um token correto", async () => {
-    sinon.stub(Users, "findOne").resolves({...UsersMock} as Users);
+    sinon.stub(Users, "findOne").resolves({...usersMock} as Users);
     sinon.stub(bcrypt, "compare").resolves(true);
     
     const email = "xablau@xablas.com";
