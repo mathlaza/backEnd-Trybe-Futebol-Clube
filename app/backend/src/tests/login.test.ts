@@ -5,7 +5,6 @@ import chaiHttp = require('chai-http');
 import Users from '../database/models/Users';
 import usersMock from './mocks/usersMock';
 import * as bcrypt from 'bcryptjs';
-// import * as token from '../middlewares/token';
 
 import { app } from '../app';
 chai.use(chaiHttp);
