@@ -12,4 +12,6 @@ matchesRoute.post('/', authToken, validateSavedMatches, matchesController.saveMa
 
 matchesRoute.patch('/:id/finish', matchesController.finishMatch);
 
+matchesRoute.patch('/:id', matchesController.updateMatch);
+
 export default matchesRoute;

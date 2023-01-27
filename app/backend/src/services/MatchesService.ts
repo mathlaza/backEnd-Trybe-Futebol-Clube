@@ -41,4 +41,11 @@ export default class MatchesService {
     const finished = await Matches.update({ inProgress: false }, { where: { id } });
     return finished;
   };
+
+  public updateMatch = async (id:string, body: IMatchSave) => {
+    const { homeTeamGoals, awayTeamGoals } = body;
+    await Matches.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+    const updated = await Matches.findByPk(id);
+    return updated;
+  };
 }
