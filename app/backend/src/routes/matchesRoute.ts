@@ -10,4 +10,6 @@ matchesRoute.get('/', matchesController.getMatches);
 
 matchesRoute.post('/', authToken, validateSavedMatches, matchesController.saveMatchInProgress);
 
+matchesRoute.patch('/:id/finish', matchesController.finishMatch);
+
 export default matchesRoute;

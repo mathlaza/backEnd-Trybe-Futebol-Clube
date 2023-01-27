@@ -36,4 +36,9 @@ export default class MatchesService {
     const newMatch = await Matches.create({ ...savedMatch, inProgress: true });
     return { type: 201, message: { ...newMatch.dataValues } };
   };
+
+  public finishMatch = async (id: string) => {
+    const finished = await Matches.update({ inProgress: false }, { where: { id } });
+    return finished;
+  };
 }
