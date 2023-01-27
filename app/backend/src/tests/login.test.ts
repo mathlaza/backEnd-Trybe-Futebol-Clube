@@ -39,22 +39,6 @@ describe('Testa a rota /login', () => {
     expect(result.text).to.deep.equal('{"message":"Incorrect email or password"}');
   });
 
-  it("Checa se mandando um header sem token, retorna erro", async () => {
-    const header = '';
-    const result = await chai.request(app).get("/login/validate").set('Authorization', header);
-
-    expect(result.status).to.equal(401);
-    expect(result.text).to.deep.equal('{"message":"Token not found"}');
-  });
-
-  it("Checa se mandando um header com token errado, retorna erro", async () => {
-    const header = 'dafsdsffassd';
-    const result = await chai.request(app).get("/login/validate").set('Authorization', header);
-
-    expect(result.status).to.equal(401);
-    expect(result.text).to.deep.equal('{"message":"Invalid token"}');
-  });
-
   it("Checa se retorna o tipo de usuário com um token correto", async () => {
     sinon.stub(Users, "findOne").resolves({...UsersMock} as Users);
     sinon.stub(bcrypt, "compare").resolves(true);
@@ -72,5 +56,21 @@ describe('Testa a rota /login', () => {
 
     (Users.findOne as sinon.SinonStub).restore();
     (bcrypt.compare as sinon.SinonStub).restore();
+  });
+
+  it("Checa se mandando um header sem token, retorna erro", async () => {
+    const header = '';
+    const result = await chai.request(app).get("/login/validate").set('Authorization', header);
+
+    expect(result.status).to.equal(401);
+    expect(result.text).to.deep.equal('{"message":"Token not found"}');
+  });
+
+  it("Checa se mandando um header com token errado, retorna erro", async () => {
+    const header = 'dafsdsffassd';
+    const result = await chai.request(app).get("/login/validate").set('Authorization', header);
+
+    expect(result.status).to.equal(401);
+    expect(result.text).to.deep.equal('{"message":"Invalid token"}');
   });
 });
