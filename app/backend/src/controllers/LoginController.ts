@@ -3,7 +3,7 @@ import LoginService from '../services/LoginService';
 import { generateToken } from '../middlewares/token';
 
 export default class LoginController {
-  public loginService: LoginService;
+  public loginService;
 
   constructor() {
     this.loginService = new LoginService();

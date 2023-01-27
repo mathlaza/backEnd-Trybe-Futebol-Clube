@@ -2,7 +2,7 @@ import { Request, Response, RequestHandler } from 'express';
 import TeamsService from '../services/TeamsService';
 
 export default class TeamController {
-  public teamsService: TeamsService;
+  public teamsService;
 
   constructor() {
     this.teamsService = new TeamsService();
