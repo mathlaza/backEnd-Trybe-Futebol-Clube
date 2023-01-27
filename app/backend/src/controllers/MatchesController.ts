@@ -1,24 +1,29 @@
 import { Request, Response } from 'express';
-import MatchService from '../services/MatchesService';
+import MatchesService from '../services/MatchesService';
 
 export default class MatchesController {
-  public matchService;
+  public matchesService;
 
   constructor() {
-    this.matchService = new MatchService();
+    this.matchesService = new MatchesService();
   }
 
   public getMatches = async (req: Request, res: Response) => {
-    if (req.query.inProgress === undefined) {
-      const allMatches = await this.matchService.getAllMatches();
+    const { inProgress } = req.query;
+    let chosen = await this.matchesService.getAllMatches();
 
-      return res.status(200).json(allMatches);
+    if (inProgress) {
+      const selectedProgress = inProgress === 'true';
+
+      chosen = chosen.filter((chosed) => chosed.inProgress === selectedProgress);
     }
+    return res.status(200).json(chosen);
+  };
 
-    const inProgress = req.query.inProgress === 'true';
+  public saveMatchInProgress = async (req: Request, res: Response) => {
+    const match = req.body;
+    const addedMatch = await this.matchesService.saveMatchInProgress(match);
 
-    const selectedMatches = await this.matchService.selectMatches(inProgress);
-
-    return res.status(200).json(selectedMatches);
+    return res.status(addedMatch.type).json(addedMatch.message);
   };
 }

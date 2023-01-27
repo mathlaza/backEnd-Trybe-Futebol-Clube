@@ -18,7 +18,7 @@ const authToken = (req: Request, res: Response, next: NextFunction) => {
     req.body.user = verifyToken;
     next();
   } catch (e) {
-    res.status(401).json({ message: 'Invalid token' });
+    res.status(401).json({ message: 'Token must be a valid token' });
   }
 };
 

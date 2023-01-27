@@ -71,6 +71,6 @@ describe('Testa a rota /login', () => {
     const result = await chai.request(app).get("/login/validate").set('Authorization', header);
 
     expect(result.status).to.equal(401);
-    expect(result.text).to.deep.equal('{"message":"Invalid token"}');
+    expect(result.text).to.deep.equal('{"message":"Token must be a valid token"}');
   });
 });
