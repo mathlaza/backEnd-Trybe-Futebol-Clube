@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import TeamOption from './TeamOption';
+import TeamOption2 from './TeamOption2';
 import Scoreboard from './Scoreboard';
+
+import { Link } from 'react-router-dom';
 
 const CreateNewGame = ({
   teams,
@@ -23,18 +25,18 @@ const CreateNewGame = ({
     <section className="match-settings-section">
       <form className="match-settings-form">
         <div className="match-settings-form-options">
-          <TeamOption
+          <TeamOption2
             testId="insertion_matches__select_home_team"
-            teams={ teams }
-            setTeams={ setTeams }
+            teams={teams}
+            setTeams={setTeams}
             homeTeam
-            getTeam={ getTeam }
+            getTeam={getTeam}
           />
           <Scoreboard
             testId="insertion_matches__select_quantity_goals_home_team"
             homeTeam
-            score={ homeTeamScoreboard }
-            setScore={ setHomeTeamScoreboard }
+            score={homeTeamScoreboard}
+            setScore={setHomeTeamScoreboard}
           />
           <div className="match-settings-form-versus">
             <span />
@@ -42,41 +44,53 @@ const CreateNewGame = ({
           </div>
           <Scoreboard
             testId="insertion_matches__select_quantity_goals_away_team"
-            homeTeam={ false }
-            score={ awayTeamScoreboard }
-            setScore={ setAwayTeamScoreboard }
+            homeTeam={false}
+            score={awayTeamScoreboard}
+            setScore={setAwayTeamScoreboard}
           />
-          <TeamOption
+          <TeamOption2
             testId="insertion_matches__select_away_team"
-            teams={ teams }
-            setTeams={ setTeams }
-            homeTeam={ false }
-            getTeam={ getTeam }
+            teams={teams}
+            setTeams={setTeams}
+            homeTeam={false}
+            getTeam={getTeam}
           />
         </div>
         <div className="match-settings-form-buttons">
-          <button
-            data-testid="insertion_matches__save_match_btn"
-            onClick={ async () => {
-              const body = await createMatch();
-              setCreatedMatch(body);
-              setInProgress('In-Progress');
-            } }
-            type="button"
-            disabled={ (inProgress !== notCreated) }
+          <Link
+            to="/matches"
           >
-            Salvar Partida
+            <button
+              data-testid="insertion_matches__save_match_btn"
+              onClick={async () => {
+                setTimeout(() => {
+                  window.location.reload(false);
+                }, 20);
+                const body = await createMatch();
+                setCreatedMatch(body);
+                setInProgress('In-Progress');
+              }}
+              type="button"
+              disabled={(inProgress !== notCreated)}
+            >
+              Salvar Partida
 
-          </button>
-          <button
-            data-testid="insertion_matches__finish_match_btn"
-            onClick={ () => { finishMatch(createdMatch.id); } }
-            type="button"
-            disabled={ (inProgress === notCreated) }
-          >
-            Finalizar Partida
+            </button>
+            <button
+              data-testid="insertion_matches__finish_match_btn"
+              onClick={() => {
+                finishMatch(createdMatch.id);
+                setTimeout(() => {
+                  window.location.reload(false);
+                }, 20);
+              }}
+              type="button"
+              disabled={(inProgress === notCreated)}
+            >
+              Finalizar Partida
 
-          </button>
+            </button>
+          </Link>
         </div>
       </form>
     </section>

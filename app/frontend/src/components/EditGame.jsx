@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import TeamOption from './TeamOption';
 import Scoreboard from './Scoreboard';
 
+import { Link } from 'react-router-dom';
+
 const EditGame = ({
   homeTeam,
   awayTeam,
@@ -22,16 +24,16 @@ const EditGame = ({
         <div className="match-settings-form-options">
           <TeamOption
             testId="insertion_matches__select_home_team"
-            teams={ homeTeam }
+            teams={homeTeam}
             homeTeam
-            getTeam={ getTeam }
+            getTeam={getTeam}
           />
           <Scoreboard
             testId="insertion_matches__select_quantity_goals_home_team"
             homeTeam
-            score={ currentHomeTeamGoals }
-            setScore={ setHomeTeamGoals }
-            qtyGoal={ homeTeamGoals }
+            score={currentHomeTeamGoals}
+            setScore={setHomeTeamGoals}
+            qtyGoal={homeTeamGoals}
           />
           <div className="match-settings-form-versus">
             <span />
@@ -39,39 +41,54 @@ const EditGame = ({
           </div>
           <Scoreboard
             testId="insertion_matches__select_quantity_goals_away_team"
-            homeTeam={ false }
-            score={ currentAwayTeamGoals }
-            setScore={ setAwayTeamGoals }
-            qtyGoal={ awayTeamGoals }
+            homeTeam={false}
+            score={currentAwayTeamGoals}
+            setScore={setAwayTeamGoals}
+            qtyGoal={awayTeamGoals}
           />
           <TeamOption
             testId="insertion_matches__select_away_team"
-            teams={ awayTeam }
-            homeTeam={ false }
-            getTeam={ getTeam }
+            teams={awayTeam}
+            homeTeam={false}
+            getTeam={getTeam}
           />
         </div>
         <div className="match-settings-form-buttons">
-          <button
-            data-testid="insertion_matches__edit_match_btn"
-            onClick={ () => updateMatch(idMatch,
-              {
-                homeTeamGoals: currentHomeTeamGoals,
-                awayTeamGoals: currentAwayTeamGoals,
-              }) }
-            type="button"
+          <Link
+            to="/matches"
           >
-            Editar
+            <button
+              data-testid="insertion_matches__edit_match_btn"
+              onClick={() => {
+                updateMatch(idMatch,
+                  {
+                    homeTeamGoals: currentHomeTeamGoals,
+                    awayTeamGoals: currentAwayTeamGoals,
+                  });
+                  setTimeout(() => {
+                    window.location.reload(false);
+                  }, 20);
+              }}
+              type="button"
+            >
+              Editar
 
-          </button>
-          <button
-            data-testid="insertion_matches__finish_match_btn"
-            onClick={ () => finishMatch(idMatch) }
-            type="button"
-          >
-            Finalizar
+            </button>
+            <button
+              data-testid="insertion_matches__finish_match_btn"
+              onClick={() => {
+                finishMatch(idMatch);
+                setTimeout(() => {
+                  window.location.reload(false);
+                }, 20);
+              }}
+              type="button"
+            >
+              Finalizar
 
-          </button>
+            </button>
+          </Link>
+
         </div>
       </form>
     </section>
