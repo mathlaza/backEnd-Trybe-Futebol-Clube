@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://blessed-trousers-production.up.railway.app/">
-    <img src="tfc_image.png" alt="Logo" width="600" height="330">
+    <img src="tfc_image.png" alt="Logo" width="700" height="370">
   </a>
   
   <p align="center" style="color:#8FBC8B; font-size:25px">
@@ -21,7 +21,7 @@
    </p>
 
 <!-- Índice -->
-## Índice
+# Índice
 
 * [Sobre o projeto](#sobre-o-projeto)
 * [Tecnologias utilizadas](#tecnologias-utilizadas)
