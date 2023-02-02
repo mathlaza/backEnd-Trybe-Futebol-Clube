@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://blessed-trousers-production.up.railway.app/">
-    <img src="tfc_image.png" alt="Logo" width="700" height="370">
+    <img src="TFCGIF.gif" alt="Logo" width="700" height="370">
   </a>
   
   <p align="center" style="color:#8FBC8B; font-size:25px">
@@ -38,9 +38,9 @@ Trata-se de um site informativo sobre partidas e classificações de futebol.
 <br>
 <br>
 Após efetuar o login com usuário: 
-<span style="color:#58a6ff">user@user.com</span> 
+<strong>user@user.com</strong>
 e senha: 
-<span style="color:#58a6ff">secret_user</span>,
+<strong>secret_user</strong>,
 é possível editar partidas, mudar o número de gols e finalizar partidas em andamento. Também pode-se adicionar novas partidas e, conforme forem finalizadas, a ordem de classificacão dos times e suas informações são atualizadas!
 <br>
 <br>
