@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://blessed-trousers-production.up.railway.app/">
+  <a href="https://abashed-books-production.up.railway.app/">
     <img src="TFC.gif" alt="Logo" width="700" height="370">
   </a>
   
@@ -15,7 +15,7 @@
 
 <p align="center">
   <!-- <span style="color:#66FF00; font-size:25px">Brinque</span> -->
-<a href="https://blessed-trousers-production.up.railway.app/" style="color:#66FF00; font-size:25px">
+<a href="https://abashed-books-production.up.railway.app/" style="color:#66FF00; font-size:25px">
     Teste o projeto! Link do deploy ⚽
   </a>
    </p>
