@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://blessed-trousers-production.up.railway.app/">
-    <img src="TFCGIF.gif" alt="Logo" width="700" height="370">
+    <img src="TFC.gif" alt="Logo" width="700" height="370">
   </a>
   
   <p align="center" style="color:#8FBC8B; font-size:25px">
@@ -31,7 +31,7 @@
 
 <!-- Sobre o projeto -->
 # Sobre o projeto
-<div style="font-size:16px">Aplicacão desenvolvida durante o curso da Trybe no módulo de back-end, com o intuito de estudar as tecnologias utilizadas.
+<div style="font-size:16px">Aplicação desenvolvida durante o curso da Trybe no módulo de back-end, com o intuito de estudar as tecnologias utilizadas.
 <br>
 <br>
 Trata-se de um site informativo sobre partidas e classificações de futebol.
