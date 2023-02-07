@@ -38,9 +38,9 @@ Trata-se de um site informativo sobre partidas e classificações de futebol.
 <br>
 <br>
 Após efetuar o login com usuário: 
-<strong>user@user.com</strong>
+<strong>admin@admin.com</strong>
 e senha: 
-<strong>secret_user</strong>,
+<strong>secret_admin</strong>,
 é possível editar partidas, mudar o número de gols e finalizar partidas em andamento. Também pode-se adicionar novas partidas e, conforme forem finalizadas, a ordem de classificacão dos times e suas informações são atualizadas!
 <br>
 <br>
